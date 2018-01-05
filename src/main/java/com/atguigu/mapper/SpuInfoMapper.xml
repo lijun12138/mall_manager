@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.atguigu.mapper.SpuInfoMapper">
+
+	<insert id="insert_spu" parameterType="com.atguigu.bean.T_MALL_PRODUCT"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into
+		T_MALL_PRODUCT(
+		shp_mch,
+		shp_tp,
+		flbh1,
+		flbh2,
+		pp_id,
+		shp_msh
+		) values(
+		#{shp_mch},
+		#{shp_tp},
+		#{flbh1},
+		#{flbh2},
+		#{pp_id},
+		#{shp_msh}
+		);
+	</insert>
+
+
+	<insert id="insert_spu_image" parameterType="map">
+		insert into
+		t_mall_product_image(
+		shp_id,
+		url
+
+		) values
+		<foreach collection="image_list" item="image" separator=",">
+			(
+			#{shp_id},
+			#{image}
+			)
+		</foreach>
+
+	</insert>
+
+	<select id="select_spu_list" resultType="com.atguigu.bean.T_MALL_PRODUCT">
+		select
+		id,shp_mch,shp_tp,chjshj,shp_msh from T_MALL_PRODUCT where
+		flbh1=#{flbh1} and flbh2=#{flbh2} and pp_id=#{pp_id}
+	</select>
+
+	<select id="select_spu_byid" resultType="com.atguigu.bean.T_MALL_PRODUCT">
+		select
+		id,shp_mch,shp_tp,chjshj,shp_msh from T_MALL_PRODUCT where id=#{id}
+	</select>
+	
+	<select id="select_spu_image" resultType="com.atguigu.bean.T_MALL_PRODUCT_IMAGE">
+		select
+		url from t_mall_product_image where shp_id=#{id}
+	</select>
+
+	<update id="update_spu" parameterType="com.atguigu.bean.T_MALL_PRODUCT">
+		update T_MALL_PRODUCT set shp_mch=#{shp_mch},shp_msh=#{shp_msh}  where id=#{id}
+	</update>
+
+
+	<delete id="delete_spu">
+		delete from T_MALL_PRODUCT where id=#{id}
+	</delete>
+	
+	<delete id="delete_spu_image">
+		delete from t_mall_product_image where shp_id=#{id}
+	</delete>
+</mapper>
